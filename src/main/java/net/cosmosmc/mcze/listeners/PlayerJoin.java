@@ -8,15 +8,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    private ZombieEscape plugin;
+    private final ZombieEscape PLUGIN;
 
     public PlayerJoin(ZombieEscape plugin) {
-        this.plugin = plugin;
+        this.PLUGIN = plugin;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        GameArena gameArena = plugin.getGameArena();
+        GameArena gameArena = PLUGIN.getGameArena();
 
         if (gameArena.isGameRunning()) {
 

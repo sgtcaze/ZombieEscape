@@ -7,23 +7,23 @@ import java.util.*;
 
 public class VoteManager {
 
-    private Set<UUID> voted = new HashSet<>();
-    private Map<String, Integer> votes = new HashMap<>();
+    private final Set<UUID> VOTED = new HashSet<>();
+    private final Map<String, Integer> VOTES = new HashMap<>();
 
     public void setMapPool(String... mapPool) {
         for (String map : mapPool) {
-            votes.put(map, 0);
+            VOTES.put(map, 0);
         }
     }
 
     public int getVotesOf(String map) {
-        return votes.get(map);
+        return VOTES.get(map);
     }
 
     public TreeMap<String, Integer> getOrdered() {
-        OrderComparator orderComparator = new OrderComparator(votes);
+        OrderComparator orderComparator = new OrderComparator(VOTES);
         TreeMap<String, Integer> ordered = new TreeMap<>(orderComparator);
-        ordered.putAll(votes);
+        ordered.putAll(VOTES);
         return ordered;
     }
 
@@ -38,12 +38,12 @@ public class VoteManager {
     public boolean vote(Player player, String map) {
         UUID uuid = player.getUniqueId();
 
-        if (voted.contains(uuid)) {
+        if (VOTED.contains(uuid)) {
             return false;
         }
 
-        voted.add(uuid);
-        votes.put(map, votes.get(map) + 1);
+        VOTED.add(uuid);
+        VOTES.put(map, VOTES.get(map) + 1);
         return true;
     }
 
