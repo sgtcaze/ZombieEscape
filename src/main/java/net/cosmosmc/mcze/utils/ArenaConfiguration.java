@@ -103,7 +103,7 @@ public class ArenaConfiguration {
         ConfigurationSection section = mainData.createSection(name).createSection("spawn");
 
         //serialize the location data and write it to the config
-        for(Entry<String, Object> entry : spawn.serialize().entrySet()) {
+        for (Entry<String, Object> entry : spawn.serialize().entrySet()) {
             section.set(entry.getKey(), entry.getValue());
         }
     }
@@ -118,8 +118,8 @@ public class ArenaConfiguration {
     public boolean doesArenaExist(String name) {
         ConfigurationSection mainData = getConfig().getConfigurationSection("arenas");
 
-        for(String keys : mainData.getKeys(false)) {
-            if(keys.equalsIgnoreCase(name)) {
+        for (String keys : mainData.getKeys(false)) {
+            if (keys.equalsIgnoreCase(name)) {
                 return true;
             }
         }

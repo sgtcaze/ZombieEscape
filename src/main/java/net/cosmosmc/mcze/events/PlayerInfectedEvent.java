@@ -14,5 +14,5 @@ public final class PlayerInfectedEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
-    
+
 }

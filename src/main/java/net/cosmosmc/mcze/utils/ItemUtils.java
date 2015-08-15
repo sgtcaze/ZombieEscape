@@ -17,15 +17,14 @@ public class ItemUtils {
         return createItem(material, name, amount, (short) 0, lore);
     }
 
-    //Feel free to modify this class if needed
     public static ItemStack createItem(Material material, String name, int amount, short data, String... lore) {
         ItemStack item = new ItemStack(material, amount, data);
         ItemMeta meta = item.getItemMeta();
 
-        if(name != null) {
+        if (name != null) {
             meta.setDisplayName(name);
         }
-        if(lore != null && lore.length > 0) {
+        if (lore != null && lore.length > 0) {
             meta.setLore(Arrays.asList(lore));
         }
 

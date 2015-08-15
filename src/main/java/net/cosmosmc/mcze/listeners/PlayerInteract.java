@@ -14,19 +14,20 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PlayerInteract implements Listener {
 
     private ZombieEscape plugin;
-    public PlayerInteract(ZombieEscape plugin){
+
+    public PlayerInteract(ZombieEscape plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event){
+    public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
-            if(event.getClickedBlock() instanceof Sign){
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (event.getClickedBlock() instanceof Sign) {
                 final Sign sign = (Sign) event.getClickedBlock();
 
                 //Sign has been activated already
-                if(sign.hasMetadata("clicked")){
+                if (sign.hasMetadata("clicked")) {
                     return;
                 }
 
@@ -34,7 +35,7 @@ public class PlayerInteract implements Listener {
                 player.sendMessage(Utils.color("&aYou have activated this door!"));
                 //Add this to the database for doors opened?
 
-                new BukkitRunnable(){
+                new BukkitRunnable() {
 
                     //Door format for anyone wondering http://prntscr.com/84zvlc
                     String[] lines = sign.getLine(1).replace("s", "").split(" ");
@@ -43,13 +44,11 @@ public class PlayerInteract implements Listener {
                     @Override
                     public void run() {
 
-                        if(time != 1){
+                        if (time != 1) {
                             time--;
                             sign.setLine(1, lines[0] + " " + time + "s");
                             sign.update();
-                        }
-
-                        else {
+                        } else {
                             //Open the door. Pretty sure we will store the location of the blocks we need to
                             //Set to air somewhere so I'll just wait for that.
                         }
@@ -58,4 +57,5 @@ public class PlayerInteract implements Listener {
             }
         }
     }
+
 }

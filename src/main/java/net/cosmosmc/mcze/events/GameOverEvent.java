@@ -14,5 +14,5 @@ public final class GameOverEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
-    
+
 }
