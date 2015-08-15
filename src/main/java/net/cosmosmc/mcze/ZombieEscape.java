@@ -3,6 +3,7 @@ package net.cosmosmc.mcze;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import net.cosmosmc.mcze.core.GameArena;
+import net.cosmosmc.mcze.listeners.EntityDamageByEntity;
 import net.cosmosmc.mcze.listeners.PlayerJoin;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,6 +33,7 @@ public class ZombieEscape extends JavaPlugin {
     private void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerJoin(this), this);
+        pm.registerEvents(new EntityDamageByEntity(), this);
     }
 
     private void setupHikari() {
