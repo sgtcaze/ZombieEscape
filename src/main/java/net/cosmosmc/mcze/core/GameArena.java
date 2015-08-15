@@ -4,7 +4,6 @@ import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameArena {
@@ -49,7 +48,7 @@ public class GameArena {
                     if (gameState == GameState.STARTING && isMinimumMet()) {
                         startGame();
                     } else {
-                       // Reset
+                        // Reset
                     }
                 }
             }
@@ -58,15 +57,13 @@ public class GameArena {
 
     public void startGame() {
         gameState = GameState.RUNNING;
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.callEvent(new GameStartEvent());
+        Bukkit.getPluginManager().callEvent(new GameStartEvent());
         //TODO: perform needed actions for starting the game (like teleporting all players, etc)
     }
 
     public void endGame() {
         gameState = GameState.WAITING;
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.callEvent(new GameOverEvent());
+        Bukkit.getPluginManager().callEvent(new GameOverEvent());
         //TODO: perform needed actions for ending the game
     }
 
