@@ -20,6 +20,8 @@ public class ZombieEscape extends JavaPlugin {
         setupHikari();
 
         gameArena = new GameArena(this);
+
+        registerListeners();
     }
 
     @Override
