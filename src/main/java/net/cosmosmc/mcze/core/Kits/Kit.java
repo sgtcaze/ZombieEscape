@@ -11,9 +11,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
-/**
- * Created by Tevin on 6/20/2015.
- */
 public abstract class Kit {
 
     public abstract String getName();
