@@ -12,10 +12,6 @@ import org.bukkit.material.MaterialData;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Programmed by Tevin on 4/25/2015 at 11:36 PM.
- */
-
 public class ItemStackBuilder {
 
     private final ItemStack	is;
