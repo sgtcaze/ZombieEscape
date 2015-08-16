@@ -10,9 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Tevin on 3/14/2015.
- */
 public class KitManager {
 
     private Set<Kit> kits = new HashSet<>();
