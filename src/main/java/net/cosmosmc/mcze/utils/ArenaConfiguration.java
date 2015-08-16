@@ -1,19 +1,11 @@
 package net.cosmosmc.mcze.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import net.cosmosmc.mcze.ZombieEscape;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class ArenaConfiguration {
 
