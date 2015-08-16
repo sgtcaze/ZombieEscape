@@ -1,10 +1,8 @@
 package net.cosmosmc.mcze.utils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.InputStream;
 
 import net.cosmosmc.mcze.ZombieEscape;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,9 +24,9 @@ public class ConfigManager {
     }
 
     /**
-     * Gets the owner of the config
+     * Gets the name of the config
      *
-     * @return The player as type bukkit.entity.Player
+     * @return The name as type String
      */
     public String getName() {
         if (NAME == null)
@@ -62,10 +60,7 @@ public class ConfigManager {
      * wrong it returns false
      */
     public boolean delete() {
-        if (getFile().delete()) {
-            return true;
-        }
-        return false;
+        return getFile().delete();
     }
 
     /**
@@ -135,7 +130,6 @@ public class ConfigManager {
     /**
      * Reloads or "Gets" the file and config
      */
-    @SuppressWarnings("deprecation")
     public void reload() {
         if (file == null) {
             file = new File(getDataFolder(), getName() + ".yml");
@@ -147,7 +141,12 @@ public class ConfigManager {
                 }
             }
             fc = YamlConfiguration.loadConfiguration(file);
-            InputStream defConfigStream = PLUGIN.getResource(getName() + ".yml");
+            Reader defConfigStream = null;
+            try {
+                defConfigStream = new InputStreamReader(PLUGIN.getResource(getName() + ".yml"), "UTF8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             if (defConfigStream != null) {
                 YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
                 fc.setDefaults(defConfig);
