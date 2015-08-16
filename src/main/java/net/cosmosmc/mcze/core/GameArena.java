@@ -5,7 +5,11 @@ import net.cosmosmc.mcze.core.constants.GameState;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
+import net.cosmosmc.mcze.utils.ItemUtils;
+import net.cosmosmc.mcze.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -65,10 +69,18 @@ public class GameArena {
 
     public void addHuman(Player player) {
         humans.add(player.getUniqueId());
+        //Not sure where we're going to store these kind of locations
+        //Probably just through YamlConfiguration
+        //player.teleport(spawn);
+        player.getInventory().addItem(ItemUtils.createEnchantedItem(Material.BOW, Utils.color("&aZombie Shooter"), Enchantment.ARROW_INFINITE, 1));
     }
 
     public void addZombie(Player player) {
         zombies.add(player.getUniqueId());
+        //Not sure where we're going to store these kind of locations
+        //Probably just through YamlConfiguration
+        //player.teleport(spawn);
+        player.getInventory().addItem(ItemUtils.createEnchantedItem(Material.IRON_SWORD, Utils.color("&aHuman Slicer"), Enchantment.DAMAGE_ALL, 1));
     }
 
     public int getStartingZombies() {
@@ -126,9 +138,6 @@ public class GameArena {
 
             addHuman(player);
         }
-
-        // TODO: Teleport
-        // TODO: Kits
 
         Messages.GAME_STARTED.broadcast();
     }
