@@ -1,11 +1,19 @@
 package net.cosmosmc.mcze.core;
 
 import net.cosmosmc.mcze.ZombieEscape;
+import net.cosmosmc.mcze.core.constants.GameState;
+import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.*;
+
+// This class represents a 'Game' instance
+// there can be multiple, but we're probably
+// going to use just 1
 public class GameArena {
 
     private final ZombieEscape PLUGIN;
@@ -13,6 +21,9 @@ public class GameArena {
     private final VoteManager VOTE_MANAGER;
 
     private final int MINIMUM_PLAYERS = 2;
+
+    private HashSet<UUID> humans = new HashSet<>();
+    private HashSet<UUID> zombies = new HashSet<>();
 
     public GameArena(ZombieEscape plugin) {
         this.PLUGIN = plugin;
@@ -32,6 +43,38 @@ public class GameArena {
         return gameState == GameState.WAITING && isMinimumMet();
     }
 
+    public boolean shouldEnd() {
+        return zombies.size() == 0 || humans.size() == 0;
+    }
+
+    public int getZombieSize() {
+        return zombies.size();
+    }
+
+    public int getHumansSize() {
+        return humans.size();
+    }
+
+    public boolean isHuman(Player player) {
+        return humans.contains(player.getUniqueId());
+    }
+
+    public boolean isZombie(Player player) {
+        return zombies.contains(player.getUniqueId());
+    }
+
+    public void addHuman(Player player) {
+        humans.add(player.getUniqueId());
+    }
+
+    public void addZombie(Player player) {
+        zombies.add(player.getUniqueId());
+    }
+
+    public int getStartingZombies() {
+        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
+    }
+
     public void startCountdown() {
         gameState = GameState.STARTING;
 
@@ -41,7 +84,7 @@ public class GameArena {
             @Override
             public void run() {
                 if (countdown != 0) {
-                    // Do countdown
+                    countdown--;
                 } else {
                     cancel();
 
@@ -58,13 +101,50 @@ public class GameArena {
     public void startGame() {
         gameState = GameState.RUNNING;
         Bukkit.getPluginManager().callEvent(new GameStartEvent());
-        //TODO: perform needed actions for starting the game (like teleporting all players, etc)
+
+        // cleanup old data, if there is any
+        zombies.clear();
+        humans.clear();
+
+        // We want to randomize, so we temporarily make a list to accomplish this
+        List<UUID> random = new ArrayList<>();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            random.add(player.getUniqueId());
+        }
+
+        Collections.shuffle(random);
+
+        for (int i = 0; i < getStartingZombies(); i++) {
+            zombies.add(random.get(i));
+        }
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (isZombie(player)) {
+                continue;
+            }
+
+            addHuman(player);
+        }
+
+        // TODO: Teleport
+        // TODO: Kits
+
+        Messages.GAME_STARTED.broadcast();
     }
 
     public void endGame() {
-        gameState = GameState.WAITING;
+        gameState = GameState.RESTRICTED;
         Bukkit.getPluginManager().callEvent(new GameOverEvent());
-        //TODO: perform needed actions for ending the game
+
+
+        if (getHumansSize() == 0) {
+            // zombies won
+        } else if (getZombieSize() == 0) {
+            // humans won
+        }
+
+        // run later, reset game state to waiting
     }
 
 }
