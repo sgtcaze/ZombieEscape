@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 //We can use this for inventories and what not
 public class ItemUtils {
+    private ItemUtils() {}
 
     public static ItemStack createItem(Material material, String name, String... lore) {
         return createItem(material, name, 1, lore);
