@@ -43,8 +43,7 @@ public class ConfigManager {
     /**
      * Get a config from type 'Config'. If it doesn't exist it will create a new Config. NOTE: String n must be exactly the Config's name.
      *
-     * @param n
-     *            The Name of the config found by getName()
+     * @param n The Name of the config found by getName()
      * @return Config for given name.
      */
     public static ConfigManager getConfig(ZombieEscape p, String n) {
@@ -60,7 +59,7 @@ public class ConfigManager {
      * Deletes the file
      *
      * @return True if the config was successfully deleted. If anything went
-     *         wrong it returns false
+     * wrong it returns false
      */
     public boolean delete() {
         if (getFile().delete()) {
@@ -124,7 +123,7 @@ public class ConfigManager {
      * Gets the config for the owner
      *
      * @return The config as type
-     *         org.bukkit.configuration.file.FileConfiguration
+     * org.bukkit.configuration.file.FileConfiguration
      */
     public FileConfiguration getConfig() {
         if (fc == null) {
