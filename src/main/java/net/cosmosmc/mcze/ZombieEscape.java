@@ -36,7 +36,7 @@ public class ZombieEscape extends JavaPlugin {
     private void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerJoin(this), this);
-        pm.registerEvents(new EntityDamageByEntity(), this);
+        pm.registerEvents(new EntityDamageByEntity(this), this);
         pm.registerEvents(new PlayerInteract(this), this);
     }
 
