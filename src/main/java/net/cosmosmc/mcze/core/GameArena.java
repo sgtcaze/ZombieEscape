@@ -63,6 +63,10 @@ public class GameArena {
         return zombies.contains(player.getUniqueId());
     }
 
+    public boolean isSameTeam(Player playerOne, Player playerTwo){
+        return isHuman(playerOne) && isHuman(playerTwo) || isZombie(playerOne) && isZombie(playerTwo);
+    }
+
     public void addHuman(Player player) {
         humans.add(player.getUniqueId());
     }
