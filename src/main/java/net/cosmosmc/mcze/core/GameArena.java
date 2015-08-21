@@ -31,6 +31,10 @@ public class GameArena {
         VOTE_MANAGER = new VoteManager();
     }
 
+    public int getStartingZombies() {
+        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
+    }
+
     public boolean isMinimumMet() {
         return Bukkit.getOnlinePlayers().size() >= MINIMUM_PLAYERS;
     }
@@ -63,20 +67,23 @@ public class GameArena {
         return zombies.contains(player.getUniqueId());
     }
 
-    public boolean isSameTeam(Player playerOne, Player playerTwo){
+    public boolean isSameTeam(Player playerOne, Player playerTwo) {
         return isHuman(playerOne) && isHuman(playerTwo) || isZombie(playerOne) && isZombie(playerTwo);
     }
 
+    public void purgePlayer(Player player) {
+        zombies.remove(player.getUniqueId());
+        humans.remove(player.getUniqueId());
+    }
+
     public void addHuman(Player player) {
+        zombies.remove(player.getUniqueId());
         humans.add(player.getUniqueId());
     }
 
     public void addZombie(Player player) {
+        humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
-    }
-
-    public int getStartingZombies() {
-        return (int) (0.25 * Bukkit.getOnlinePlayers().size()) + 1;
     }
 
     public void startCountdown() {
@@ -95,7 +102,7 @@ public class GameArena {
                     if (gameState == GameState.STARTING && isMinimumMet()) {
                         startGame();
                     } else {
-                        // Reset
+                        gameState = GameState.WAITING;
                     }
                 }
             }
@@ -117,12 +124,17 @@ public class GameArena {
             random.add(player.getUniqueId());
         }
 
+        // Shuffle the players
         Collections.shuffle(random);
 
+        // Select our zombies from the random list
         for (int i = 0; i < getStartingZombies(); i++) {
             zombies.add(random.get(i));
         }
 
+        // Sort remaining players who are not zombies
+        // TODO: Add their kit here
+        // TODO: Teleport here
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (isZombie(player)) {
                 continue;
@@ -130,9 +142,6 @@ public class GameArena {
 
             addHuman(player);
         }
-
-        // TODO: Teleport
-        // TODO: Kits
 
         Messages.GAME_STARTED.broadcast();
     }

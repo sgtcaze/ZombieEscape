@@ -1,33 +1,28 @@
 package net.cosmosmc.mcze.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import net.cosmosmc.mcze.ZombieEscape;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.*;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ArenaConfiguration {
 
-    private final ZombieEscape plugin;
+    private final ZombieEscape PLUGIN;
 
-    private final String name;
+    private final String NAME;
 
     private File configFile;
 
     private FileConfiguration config;
 
     public ArenaConfiguration(ZombieEscape plugin, String name) {
-        this.plugin = plugin;
-        this.name = name;
+        this.PLUGIN = plugin;
+        this.NAME = name;
         this.configFile = new File(plugin.getDataFolder(), name + ".yml");
 
         reloadConfig();
@@ -40,7 +35,7 @@ public class ArenaConfiguration {
         Reader defaultConfigStream = null;
         try {
             // create an InputStream to read from the *default* config
-            defaultConfigStream = new InputStreamReader(this.plugin.getResource(this.name + ".yml"), "UTF8");
+            defaultConfigStream = new InputStreamReader(this.PLUGIN.getResource(this.NAME + ".yml"), "UTF8");
         } catch (UnsupportedEncodingException e) {
             // shouldn't happen, but print the error if it does
             e.printStackTrace();
@@ -79,12 +74,12 @@ public class ArenaConfiguration {
     public void saveDefaultConfig() {
         if (this.configFile == null) {
             // if the config file is null, set it to the correct location
-            this.configFile = new File(this.plugin.getDataFolder(), this.name + ".yml");
+            this.configFile = new File(this.PLUGIN.getDataFolder(), this.NAME + ".yml");
         }
 
         if (!this.configFile.exists()) {
             // if the config file does not exist, exist it shall
-            plugin.saveResource(this.name + ".yml", false);
+            PLUGIN.saveResource(this.NAME + ".yml", false);
         }
     }
 

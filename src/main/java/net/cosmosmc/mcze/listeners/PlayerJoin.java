@@ -2,9 +2,12 @@ package net.cosmosmc.mcze.listeners;
 
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.GameArena;
+import net.cosmosmc.mcze.profiles.Profile;
+import net.cosmosmc.mcze.profiles.ProfileLoader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoin implements Listener {
 
@@ -25,6 +28,10 @@ public class PlayerJoin implements Listener {
                 gameArena.startCountdown();
             }
         }
+
+        final Profile PROFILE = new Profile(event.getPlayer());
+        PLUGIN.getGameManager().getProfiles().put(event.getPlayer().getUniqueId(), PROFILE);
+        new ProfileLoader(PROFILE, PLUGIN).runTaskAsynchronously(PLUGIN);
     }
 
 }
