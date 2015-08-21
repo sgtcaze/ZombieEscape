@@ -1,6 +1,8 @@
 package net.cosmosmc.mcze.core;
 
 import lombok.AllArgsConstructor;
+import net.cosmosmc.mcze.events.PlayerMapVoteEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -41,7 +43,9 @@ public class VoteManager {
         if (VOTED.contains(uuid)) {
             return false;
         }
-
+        //Here because if they already voted it should not call the event
+        Bukkit.getPluginManager().callEvent(new PlayerMapVoteEvent());
+        //Able to cancel it?
         VOTED.add(uuid);
         VOTES.put(map, VOTES.get(map) + 1);
         return true;
