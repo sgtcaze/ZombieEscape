@@ -3,9 +3,8 @@ package net.cosmosmc.mcze;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import net.cosmosmc.mcze.core.GameArena;
-import net.cosmosmc.mcze.listeners.EntityDamageByEntity;
-import net.cosmosmc.mcze.listeners.PlayerInteract;
-import net.cosmosmc.mcze.listeners.PlayerJoin;
+import net.cosmosmc.mcze.core.GameManager;
+import net.cosmosmc.mcze.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -16,16 +15,19 @@ public class ZombieEscape extends JavaPlugin {
 
     private GameArena gameArena;
     private HikariDataSource hikari;
+    private GameManager gameManager;
 
     @Override
     public void onEnable() {
         setupHikari();
 
         gameArena = new GameArena(this);
+        gameManager = new GameManager();
 
         registerListeners();
     }
 
+    // TODO: Cleanup open files/instances/etc
     @Override
     public void onDisable() {
         if (hikari != null) {
@@ -35,9 +37,14 @@ public class ZombieEscape extends JavaPlugin {
 
     private void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerJoin(this), this);
-        pm.registerEvents(new EntityDamageByEntity(), this);
+        pm.registerEvents(new EntityDamageByEntity(this), this);
+        pm.registerEvents(new FoodLevelChange(), this);
+        pm.registerEvents(new PlayerDeath(this), this);
+        pm.registerEvents(new PlayerDropItem(), this);
         pm.registerEvents(new PlayerInteract(this), this);
+        pm.registerEvents(new PlayerJoin(this), this);
+        pm.registerEvents(new PlayerPickupItem(), this);
+        pm.registerEvents(new PlayerQuit(this), this);
     }
 
     private void setupHikari() {

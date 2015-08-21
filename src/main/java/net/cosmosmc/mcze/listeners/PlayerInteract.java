@@ -11,6 +11,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+/**
+ * Class by itsMonkey
+ *
+ * Note from sgtcaze -
+ * will split door timers into separate
+ * runnables, so we can try our best to
+ * keep the code concise
+ */
 public class PlayerInteract implements Listener {
 
     private ZombieEscape plugin;
