@@ -5,6 +5,7 @@ import net.cosmosmc.mcze.core.constants.GameState;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
+import net.cosmosmc.mcze.events.PlayerJoinTeamEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -79,11 +80,13 @@ public class GameArena {
     public void addHuman(Player player) {
         zombies.remove(player.getUniqueId());
         humans.add(player.getUniqueId());
+        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
     }
 
     public void addZombie(Player player) {
         humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
+        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
     }
 
     public void startCountdown() {
@@ -152,8 +155,14 @@ public class GameArena {
 
 
         if (getHumansSize() == 0) {
+            for (UUID uuid : zombies) {
+                Messages.GAME_WON.send(Bukkit.getPlayer(uuid));
+            }
             // zombies won
         } else if (getZombieSize() == 0) {
+            for (UUID uuid : humans) {
+                Messages.GAME_WON.send(Bukkit.getPlayer(uuid));
+            }
             // humans won
         }
 
