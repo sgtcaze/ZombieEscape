@@ -21,10 +21,10 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class PlayerInteract implements Listener {
 
-    private ZombieEscape plugin;
+    private final ZombieEscape PLUGIN;
 
     public PlayerInteract(ZombieEscape plugin) {
-        this.plugin = plugin;
+        this.PLUGIN = plugin;
     }
 
     @EventHandler
@@ -39,7 +39,7 @@ public class PlayerInteract implements Listener {
                     return;
                 }
 
-                sign.setMetadata("clicked", new FixedMetadataValue(plugin, true));
+                sign.setMetadata("clicked", new FixedMetadataValue(PLUGIN, true));
                 player.sendMessage(Utils.color("&aYou have activated this door!"));
                 //Add this to the database for doors opened?
 
@@ -61,7 +61,7 @@ public class PlayerInteract implements Listener {
                             //Set to air somewhere so I'll just wait for that.
                         }
                     }
-                }.runTaskTimerAsynchronously(plugin, 0, 20);
+                }.runTaskTimerAsynchronously(PLUGIN, 0, 20);
             }
         }
     }

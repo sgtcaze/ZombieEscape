@@ -22,8 +22,8 @@ public class GameArena {
 
     private final int MINIMUM_PLAYERS = 2;
 
-    private HashSet<UUID> humans = new HashSet<>();
-    private HashSet<UUID> zombies = new HashSet<>();
+    private final Set<UUID> HUMANS = new HashSet<>();
+    private final Set<UUID> ZOMBIES = new HashSet<>();
 
     public GameArena(ZombieEscape plugin) {
         this.PLUGIN = plugin;
@@ -48,23 +48,23 @@ public class GameArena {
     }
 
     public boolean shouldEnd() {
-        return zombies.size() == 0 || humans.size() == 0;
+        return ZOMBIES.size() == 0 || HUMANS.size() == 0;
     }
 
     public int getZombieSize() {
-        return zombies.size();
+        return ZOMBIES.size();
     }
 
     public int getHumansSize() {
-        return humans.size();
+        return HUMANS.size();
     }
 
     public boolean isHuman(Player player) {
-        return humans.contains(player.getUniqueId());
+        return HUMANS.contains(player.getUniqueId());
     }
 
     public boolean isZombie(Player player) {
-        return zombies.contains(player.getUniqueId());
+        return ZOMBIES.contains(player.getUniqueId());
     }
 
     public boolean isSameTeam(Player playerOne, Player playerTwo) {
@@ -72,18 +72,18 @@ public class GameArena {
     }
 
     public void purgePlayer(Player player) {
-        zombies.remove(player.getUniqueId());
-        humans.remove(player.getUniqueId());
+        ZOMBIES.remove(player.getUniqueId());
+        HUMANS.remove(player.getUniqueId());
     }
 
     public void addHuman(Player player) {
-        zombies.remove(player.getUniqueId());
-        humans.add(player.getUniqueId());
+        ZOMBIES.remove(player.getUniqueId());
+        HUMANS.add(player.getUniqueId());
     }
 
     public void addZombie(Player player) {
-        humans.remove(player.getUniqueId());
-        zombies.add(player.getUniqueId());
+        HUMANS.remove(player.getUniqueId());
+        ZOMBIES.add(player.getUniqueId());
     }
 
     public void startCountdown() {
@@ -114,8 +114,8 @@ public class GameArena {
         Bukkit.getPluginManager().callEvent(new GameStartEvent());
 
         // cleanup old data, if there is any
-        zombies.clear();
-        humans.clear();
+        ZOMBIES.clear();
+        HUMANS.clear();
 
         // We want to randomize, so we temporarily make a list to accomplish this
         List<UUID> random = new ArrayList<>();
@@ -127,12 +127,12 @@ public class GameArena {
         // Shuffle the players
         Collections.shuffle(random);
 
-        // Select our zombies from the random list
+        // Select our ZOMBIES from the random list
         for (int i = 0; i < getStartingZombies(); i++) {
-            zombies.add(random.get(i));
+            ZOMBIES.add(random.get(i));
         }
 
-        // Sort remaining players who are not zombies
+        // Sort remaining players who are not ZOMBIES
         // TODO: Add their kit here
         // TODO: Teleport here
         for (Player player : Bukkit.getOnlinePlayers()) {

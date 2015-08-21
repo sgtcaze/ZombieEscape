@@ -8,6 +8,7 @@ public class PlayerDropItem implements Listener {
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
+        /* TODO: Cancel this event based on if the player is in an arena and if so check if the state allows this event or not. */
         event.setCancelled(true);
     }
 

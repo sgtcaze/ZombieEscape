@@ -10,22 +10,22 @@ public enum Messages {
 
     GAME_STARTED("&3The game has started!");
 
-    private String message;
+    private final String MESSAGE;
 
     Messages(String message) {
-        this.message = Utils.color(message);
+        this.MESSAGE = Utils.color(message);
     }
 
     public void send(Player player) {
-        player.sendMessage(message);
+        player.sendMessage(MESSAGE);
     }
 
     public void send(Player player, String replacement) {
-        player.sendMessage(message.replace("%s", replacement));
+        player.sendMessage(MESSAGE.replace("%s", replacement));
     }
 
     public void broadcast() {
-        Bukkit.broadcastMessage(message);
+        Bukkit.broadcastMessage(MESSAGE);
     }
 
 }

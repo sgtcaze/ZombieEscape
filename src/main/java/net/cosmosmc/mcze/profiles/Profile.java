@@ -10,8 +10,8 @@ import java.util.UUID;
 @Setter
 public class Profile {
 
-    private UUID uuid;
-    private String name;
+    private final UUID UNIQUE_ID;
+    private final String NAME;
 
     private int zombieKills;
     private int humanKills;
@@ -21,8 +21,8 @@ public class Profile {
     private boolean loaded;
 
     public Profile(Player player) {
-        this.uuid = player.getUniqueId();
-        this.name = player.getName();
+        this.UNIQUE_ID = player.getUniqueId();
+        this.NAME = player.getName();
     }
 
 }

@@ -16,21 +16,21 @@ public class ArenaConfiguration {
 
     private final String NAME;
 
-    private File configFile;
+    private final File CONFIG_FILE;
 
     private FileConfiguration config;
 
     public ArenaConfiguration(ZombieEscape plugin, String name) {
         this.PLUGIN = plugin;
         this.NAME = name;
-        this.configFile = new File(plugin.getDataFolder(), name + ".yml");
+        this.CONFIG_FILE = new File(plugin.getDataFolder(), name + ".yml");
 
         reloadConfig();
     }
 
     public void reloadConfig() {
         // load the file and replace the current instance
-        this.config = YamlConfiguration.loadConfiguration(this.configFile);
+        this.config = YamlConfiguration.loadConfiguration(this.CONFIG_FILE);
 
         Reader defaultConfigStream = null;
         try {
@@ -57,14 +57,14 @@ public class ArenaConfiguration {
     }
 
     public boolean saveConfig() {
-        if (this.config == null || this.configFile == null) {
+        if (this.config == null || this.CONFIG_FILE == null) {
             // we obviously can't save if there's nothing to save or anywhere to save to
             return false;
         }
 
         try {
             // if the save succeeds, return true, otherwise false
-            this.config.save(this.configFile);
+            this.config.save(this.CONFIG_FILE);
             return true;
         } catch (IOException e) {
             return false;
@@ -72,12 +72,12 @@ public class ArenaConfiguration {
     }
 
     public void saveDefaultConfig() {
-        if (this.configFile == null) {
+        if (this.CONFIG_FILE == null) {
             // if the config file is null, set it to the correct location
-            this.configFile = new File(this.PLUGIN.getDataFolder(), this.NAME + ".yml");
+            this.CONFIG_FILE = new File(this.PLUGIN.getDataFolder(), this.NAME + ".yml");
         }
 
-        if (!this.configFile.exists()) {
+        if (!this.CONFIG_FILE.exists()) {
             // if the config file does not exist, exist it shall
             PLUGIN.saveResource(this.NAME + ".yml", false);
         }

@@ -11,14 +11,14 @@ import java.util.UUID;
 @Getter
 public class GameManager {
 
-    private Map<UUID, Profile> profiles = new HashMap<>();
+    private final Map<UUID, Profile> PROFILES = new HashMap<>();
 
     public Profile getProfile(Player player) {
-        return profiles.get(player.getUniqueId());
+        return PROFILES.get(player.getUniqueId());
     }
 
     public Profile getRemovedProfile(Player player) {
-        return profiles.remove(player.getUniqueId());
+        return PROFILES.remove(player.getUniqueId());
     }
 
 }
