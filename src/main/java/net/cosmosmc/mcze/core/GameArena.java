@@ -25,6 +25,7 @@ public class GameArena {
 
     private HashSet<UUID> humans = new HashSet<>();
     private HashSet<UUID> zombies = new HashSet<>();
+    private HashSet<UUID> spectators = new HashSet<>();
 
     public GameArena(ZombieEscape plugin) {
         this.PLUGIN = plugin;
@@ -60,12 +61,20 @@ public class GameArena {
         return humans.size();
     }
 
+    public int getSpectatorsSize() {
+        return spectators.size();
+    }
+
     public boolean isHuman(Player player) {
         return humans.contains(player.getUniqueId());
     }
 
     public boolean isZombie(Player player) {
         return zombies.contains(player.getUniqueId());
+    }
+
+    public boolean isSpectator(Player player) {
+        return spectators.contains(player.getUniqueId());
     }
 
     public boolean isSameTeam(Player playerOne, Player playerTwo) {
@@ -75,18 +84,33 @@ public class GameArena {
     public void purgePlayer(Player player) {
         zombies.remove(player.getUniqueId());
         humans.remove(player.getUniqueId());
+        spectators.remove(player.getUniqueId());
     }
 
     public void addHuman(Player player) {
+        if (spectators.contains(player.getUniqueId())) {
+            System.out.println(player.getName() + "is not allowed to join the human team [SPECTATOR]");
+            return;
+        }
         zombies.remove(player.getUniqueId());
         humans.add(player.getUniqueId());
         Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
     }
 
     public void addZombie(Player player) {
+        if (spectators.contains(player.getUniqueId())) {
+            System.out.println(player.getName() + "is not allowed to join the zombie team [SPECTATOR]");
+            return;
+        }
         humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
         Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
+    }
+
+    public void addSpectator(Player player) {
+        humans.remove(player.getUniqueId());
+        zombies.remove(player.getUniqueId());
+        spectators.add(player.getUniqueId());
     }
 
     public void startCountdown() {
