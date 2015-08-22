@@ -8,7 +8,8 @@ import org.bukkit.entity.Player;
 // TODO: Create more methods for simplicity
 public enum Messages {
 
-    GAME_STARTED("&3The game has started!");
+    GAME_STARTED("&3The game has started!"),
+    GAME_WON("You have won the game!");
 
     private String message;
 

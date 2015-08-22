@@ -7,7 +7,6 @@ import net.cosmosmc.mcze.profiles.ProfileLoader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoin implements Listener {
 
@@ -22,7 +21,7 @@ public class PlayerJoin implements Listener {
         GameArena gameArena = PLUGIN.getGameArena();
 
         if (gameArena.isGameRunning()) {
-
+            gameArena.addSpectator(event.getPlayer());
         } else {
             if (gameArena.shouldStart()) {
                 gameArena.startCountdown();
