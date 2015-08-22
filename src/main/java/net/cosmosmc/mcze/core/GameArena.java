@@ -89,28 +89,29 @@ public class GameArena {
 
     public void addHuman(Player player) {
         if (spectators.contains(player.getUniqueId())) {
-            System.out.println(player.getName() + "is not allowed to join the human team [SPECTATOR]");
+            System.out.println(player.getName() + " is not allowed to join the human team [SPECTATOR]");
             return;
         }
         zombies.remove(player.getUniqueId());
         humans.add(player.getUniqueId());
-        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
+        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent(player, humans));
     }
 
     public void addZombie(Player player) {
         if (spectators.contains(player.getUniqueId())) {
-            System.out.println(player.getName() + "is not allowed to join the zombie team [SPECTATOR]");
+            System.out.println(player.getName() + " is not allowed to join the zombie team [SPECTATOR]");
             return;
         }
         humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
-        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent());
+        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent(player, zombies));
     }
 
     public void addSpectator(Player player) {
         humans.remove(player.getUniqueId());
         zombies.remove(player.getUniqueId());
         spectators.add(player.getUniqueId());
+        Bukkit.getPluginManager().callEvent(new PlayerJoinTeamEvent(player, spectators));
     }
 
     public void startCountdown() {
