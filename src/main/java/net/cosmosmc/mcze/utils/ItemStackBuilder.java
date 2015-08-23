@@ -1,6 +1,5 @@
 package net.cosmosmc.mcze.utils;
 
-
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,96 +13,93 @@ import java.util.List;
 
 public class ItemStackBuilder {
 
-    private final ItemStack	is;
+    private final ItemStack ITEM_STACK;
 
-    // Made a easier ItemStackBuilder that is chainable
-
-    public ItemStackBuilder(final Material mat) {
-        is = new ItemStack(mat);
+    public ItemStackBuilder(Material mat) {
+        this.ITEM_STACK = new ItemStack(mat);
     }
 
-    public ItemStackBuilder(final ItemStack is) {
-        this.is = is;
+    public ItemStackBuilder(ItemStack item) {
+        this.ITEM_STACK = item;
     }
 
-    public ItemStackBuilder amount(final int amount) {
-        is.setAmount(amount);
+    public ItemStackBuilder withAmount(int amount) {
+        ITEM_STACK.setAmount(amount);
         return this;
     }
 
-    public ItemStackBuilder name(final String name) {
-        final ItemMeta meta = is.getItemMeta();
+    public ItemStackBuilder withName(String name) {
+        final ItemMeta meta = ITEM_STACK.getItemMeta();
         meta.setDisplayName(Utils.color(name));
-        is.setItemMeta(meta);
+        ITEM_STACK.setItemMeta(meta);
         return this;
     }
 
-    public ItemStackBuilder lore(final String name) {
-        final ItemMeta meta = is.getItemMeta();
+    public ItemStackBuilder withLore(String name) {
+        final ItemMeta meta = ITEM_STACK.getItemMeta();
         List<String> lore = meta.getLore();
         if (lore == null) {
             lore = new ArrayList<>();
         }
         lore.add(Utils.color(name));
         meta.setLore(lore);
-        is.setItemMeta(meta);
+        ITEM_STACK.setItemMeta(meta);
         return this;
     }
 
-    public ItemStackBuilder durability(final int durability) {
-        is.setDurability((short) durability);
+    public ItemStackBuilder withDurability(int durability) {
+        ITEM_STACK.setDurability((short) durability);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
-    public ItemStackBuilder data(final int data) {
-        is.setData(new MaterialData(is.getType(), (byte) data));
+    public ItemStackBuilder withData(int data) {
+        ITEM_STACK.setData(new MaterialData(ITEM_STACK.getType(), (byte) data));
         return this;
     }
 
-    public ItemStackBuilder enchantment(final Enchantment enchantment, final int level) {
-        is.addUnsafeEnchantment(enchantment, level);
+    public ItemStackBuilder withEnchantment(Enchantment enchantment, final int level) {
+        ITEM_STACK.addUnsafeEnchantment(enchantment, level);
         return this;
     }
 
-    public ItemStackBuilder enchantment(final Enchantment enchantment) {
-        is.addUnsafeEnchantment(enchantment, 1);
+    public ItemStackBuilder withEnchantment(Enchantment enchantment) {
+        ITEM_STACK.addUnsafeEnchantment(enchantment, 1);
         return this;
     }
 
-    public ItemStackBuilder type(final Material material) {
-        is.setType(material);
+    public ItemStackBuilder withType(Material material) {
+        ITEM_STACK.setType(material);
         return this;
     }
 
     public ItemStackBuilder clearLore() {
-        final ItemMeta meta = is.getItemMeta();
+        final ItemMeta meta = ITEM_STACK.getItemMeta();
         meta.setLore(new ArrayList<String>());
-        is.setItemMeta(meta);
+        ITEM_STACK.setItemMeta(meta);
         return this;
     }
 
     public ItemStackBuilder clearEnchantments() {
-        for (final Enchantment e : is.getEnchantments().keySet()) {
-            is.removeEnchantment(e);
+        for (Enchantment enchantment : ITEM_STACK.getEnchantments().keySet()) {
+            ITEM_STACK.removeEnchantment(enchantment);
         }
         return this;
     }
 
-    public ItemStackBuilder color(Color color) {
-        if (is.getType() == Material.LEATHER_BOOTS || is.getType() == Material.LEATHER_CHESTPLATE || is.getType() == Material.LEATHER_HELMET
-                || is.getType() == Material.LEATHER_LEGGINGS) {
-            LeatherArmorMeta meta = (LeatherArmorMeta) is.getItemMeta();
+    public ItemStackBuilder withColor(Color color) {
+        Material type = ITEM_STACK.getType();
+        if (type == Material.LEATHER_BOOTS || type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_HELMET || type == Material.LEATHER_LEGGINGS) {
+            LeatherArmorMeta meta = (LeatherArmorMeta) ITEM_STACK.getItemMeta();
             meta.setColor(color);
-            is.setItemMeta(meta);
+            ITEM_STACK.setItemMeta(meta);
             return this;
         } else {
-            throw new IllegalArgumentException("color is only applicable for leather armor!");
+            throw new IllegalArgumentException("withColor is only applicable for leather armor!");
         }
     }
 
     public ItemStack build() {
-        return is;
+        return ITEM_STACK;
     }
 
 }

@@ -24,6 +24,7 @@ public class PlayerQuit implements Listener {
 
         if (gameArena.isGameRunning()) {
             if (gameArena.shouldEnd()) {
+                // Possibly deduct points?
                 gameArena.endGame();
             }
         }
