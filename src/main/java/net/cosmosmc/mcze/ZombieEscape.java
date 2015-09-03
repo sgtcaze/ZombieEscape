@@ -4,7 +4,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import net.cosmosmc.mcze.core.GameArena;
 import net.cosmosmc.mcze.core.GameManager;
+import net.cosmosmc.mcze.guis.HumanKitMenu;
+import net.cosmosmc.mcze.guis.ZombieKitMenu;
 import net.cosmosmc.mcze.listeners.*;
+import net.cosmosmc.mcze.utils.menus.MenuManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -16,6 +19,7 @@ public class ZombieEscape extends JavaPlugin {
     private GameArena gameArena;
     private HikariDataSource hikari;
     private GameManager gameManager;
+    private MenuManager menuManager;
 
     @Override
     public void onEnable() {
@@ -23,6 +27,10 @@ public class ZombieEscape extends JavaPlugin {
 
         gameArena = new GameArena(this);
         gameManager = new GameManager();
+        menuManager = new MenuManager(this);
+
+        menuManager.addMenu("hkits", new HumanKitMenu("Human Kit Menu", 9));
+        menuManager.addMenu("zkits", new ZombieKitMenu("Zombie Kit Menu", 9));
 
         registerListeners();
     }

@@ -27,14 +27,13 @@ public class ProfileLoader extends BukkitRunnable {
 
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, profile.getUuid().toString());
-            preparedStatement.setString(2, profile.getName());
+            preparedStatement.setString(2, profile.getUuid().toString());
             preparedStatement.setInt(3, 0);
             preparedStatement.setInt(4, 0);
             preparedStatement.setInt(5, 0);
             preparedStatement.setInt(6, 0);
             preparedStatement.setString(7, profile.getName());
             preparedStatement.execute();
-            preparedStatement.close();
 
             preparedStatement = connection.prepareStatement(SELECT);
             preparedStatement.setString(1, profile.getUuid().toString());
