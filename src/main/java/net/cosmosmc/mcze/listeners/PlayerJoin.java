@@ -31,7 +31,7 @@ public class PlayerJoin implements Listener {
 
         final Profile PROFILE = new Profile(event.getPlayer());
         PLUGIN.getGameManager().getProfiles().put(event.getPlayer().getUniqueId(), PROFILE);
-        new ProfileLoader(PROFILE, PLUGIN).runTaskAsynchronously(PLUGIN);
+        //new ProfileLoader(PROFILE, PLUGIN).runTaskAsynchronously(PLUGIN);
     }
 
 }

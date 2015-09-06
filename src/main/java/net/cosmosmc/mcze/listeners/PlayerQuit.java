@@ -29,8 +29,8 @@ public class PlayerQuit implements Listener {
             }
         }
 
-        Profile profile = PLUGIN.getGameManager().getRemovedProfile(event.getPlayer());
-        new ProfileSaver(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
+        //Profile profile = PLUGIN.getGameManager().getRemovedProfile(event.getPlayer());
+        //new ProfileSaver(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
     }
 
 }

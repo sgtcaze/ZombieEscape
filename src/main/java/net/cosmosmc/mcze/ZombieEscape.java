@@ -23,7 +23,7 @@ public class ZombieEscape extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        setupHikari();
+        // setupHikari();
 
         gameArena = new GameArena(this);
         gameManager = new GameManager();
