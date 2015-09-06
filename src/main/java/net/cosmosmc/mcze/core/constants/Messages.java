@@ -8,10 +8,15 @@ import org.bukkit.entity.Player;
 // TODO: Add more languages and messages
 public enum Messages {
 
-    GAME_STARTED("&3The game has started!",
-            new Translation(Language.SPANISH, "&3El juego ha comenzado!"),
-            new Translation(Language.FRENCH, "&3Le jeu a commencé!"),
-            new Translation(Language.GERMAN, "&3Das Spiel hat begonnen!") //translations taken from Google Translate
+    GAME_STARTED("&a&lThe game has started!",
+            new Translation(Language.SPANISH, "&a&lEl juego ha comenzado!"),
+            new Translation(Language.FRENCH, "&a&lLe jeu a commencé!"),
+            new Translation(Language.GERMAN, "&a&lDas Spiel hat begonnen!") //translations taken from Google Translate
+    ),
+    GAME_ENDED("&c&lTHE GAME ENDED!",
+            new Translation(Language.SPANISH, "&c&lEl juego ha terminado!"),
+            new Translation(Language.FRENCH, "&c&lLe jeu est terminé!"),
+            new Translation(Language.GERMAN, "&c&lDas Spiel ist beendet!")
     );
 
     private final static String DEFAULT_VARIABLE = "%s"; //default string to be replaced in a given message if needed
