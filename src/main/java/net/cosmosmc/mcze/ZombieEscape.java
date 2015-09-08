@@ -7,6 +7,7 @@ import net.cosmosmc.mcze.core.GameManager;
 import net.cosmosmc.mcze.guis.HumanKitMenu;
 import net.cosmosmc.mcze.guis.ZombieKitMenu;
 import net.cosmosmc.mcze.listeners.*;
+import net.cosmosmc.mcze.utils.Configuration;
 import net.cosmosmc.mcze.utils.menus.MenuManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -20,6 +21,7 @@ public class ZombieEscape extends JavaPlugin {
     private HikariDataSource hikari;
     private GameManager gameManager;
     private MenuManager menuManager;
+    private Configuration configuration;
 
     @Override
     public void onEnable() {
@@ -28,6 +30,7 @@ public class ZombieEscape extends JavaPlugin {
         gameArena = new GameArena(this);
         gameManager = new GameManager();
         menuManager = new MenuManager(this);
+        configuration = new Configuration(this);
 
         menuManager.addMenu("hkits", new HumanKitMenu("Human Kit Menu", 9));
         menuManager.addMenu("zkits", new ZombieKitMenu("Zombie Kit Menu", 9));
@@ -56,7 +59,7 @@ public class ZombieEscape extends JavaPlugin {
     }
 
     private void setupHikari() {
-        FileConfiguration config = getConfig();
+        FileConfiguration config = configuration.getSettingsConfig();
 
         String address = config.getString("Database.Address");
         String name = config.getString("Database.Schema");
@@ -66,8 +69,8 @@ public class ZombieEscape extends JavaPlugin {
         hikari = new HikariDataSource();
         hikari.setMaximumPoolSize(10);
         hikari.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        hikari.addDataSourceProperty("serverName", address);
-        hikari.addDataSourceProperty("port", "3306");
+        hikari.addDataSourceProperty("serverName", address.split(":")[0]);
+        hikari.addDataSourceProperty("port", address.split(":")[1]);
         hikari.addDataSourceProperty("databaseName", name);
         hikari.addDataSourceProperty("user", username);
         hikari.addDataSourceProperty("password", password);
