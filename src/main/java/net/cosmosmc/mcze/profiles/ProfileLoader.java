@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.constants.Achievements;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Achievement;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
@@ -73,7 +72,7 @@ public class ProfileLoader extends BukkitRunnable {
         char[] achievementStatuses = result.getString("achievements").toCharArray();
 
         for(Achievements achievement : Achievements.values()) {
-            if((achievementStatuses.length >= achievement.getId()) && (achievementStatuses[achievement.getId()] != null)) {
+            if(isSet(achievementStatuses, achievement.getId())) {
                 achievements[achievement.getId()] = achievementStatuses[achievement.getId()];
             } else {
                 achievements[achievement.getId()] = 'f';
@@ -81,5 +80,13 @@ public class ProfileLoader extends BukkitRunnable {
         }
 
         return achievements;
+    }
+
+    private boolean isSet(Object[] array, int index) {
+        try {
+            return (array[index] != null);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
     }
 }
