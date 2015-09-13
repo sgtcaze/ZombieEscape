@@ -2,6 +2,7 @@ package net.cosmosmc.mcze.profiles;
 
 import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
@@ -15,8 +16,8 @@ public class ProfileLoader extends BukkitRunnable {
     private Profile profile;
     private ZombieEscape plugin;
 
-    private static final String INSERT = "INSERT INTO data VALUES(?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
-    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins FROM data WHERE uuid=?";
+    private static final String INSERT = "INSERT INTO data VALUES(?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
+    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins,achievements FROM data WHERE uuid=?";
 
     @Override
     public void run() {
@@ -32,7 +33,8 @@ public class ProfileLoader extends BukkitRunnable {
             preparedStatement.setInt(4, 0);
             preparedStatement.setInt(5, 0);
             preparedStatement.setInt(6, 0);
-            preparedStatement.setString(7, profile.getName());
+            preparedStatement.setString(7, StringUtils.repeat("f", 10));
+            preparedStatement.setString(8, profile.getName());
             preparedStatement.execute();
 
             preparedStatement = connection.prepareStatement(SELECT);
@@ -45,6 +47,7 @@ public class ProfileLoader extends BukkitRunnable {
                 profile.setZombieKills(resultSet.getInt("zombie_kills"));
                 profile.setPoints(resultSet.getInt("points"));
                 profile.setWins(resultSet.getInt("wins"));
+                profile.setAchievements(resultSet.getString("achievements").toCharArray());
                 profile.setLoaded(true);
             }
 

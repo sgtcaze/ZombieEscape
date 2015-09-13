@@ -2,6 +2,7 @@ package net.cosmosmc.mcze.profiles;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.cosmosmc.mcze.core.constants.Achievements;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -17,12 +18,19 @@ public class Profile {
     private int humanKills;
     private int points;
     private int wins;
+    private int gamesPlayed;
 
     private boolean loaded;
+
+    private char[] achievements;
 
     public Profile(Player player) {
         this.uuid = player.getUniqueId();
         this.name = player.getName();
+    }
+
+    public void awardAchievement(Achievements achievement) {
+        achievements[achievement.getId()] = 't';
     }
 
 }

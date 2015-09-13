@@ -1,10 +1,12 @@
 package net.cosmosmc.mcze.core;
 
 import net.cosmosmc.mcze.ZombieEscape;
+import net.cosmosmc.mcze.core.constants.Achievements;
 import net.cosmosmc.mcze.core.constants.GameState;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
+import net.cosmosmc.mcze.profiles.Profile;
 import net.cosmosmc.mcze.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -162,6 +164,19 @@ public class GameArena {
 
         Messages.GAME_ENDED.broadcast();
 
+        // awardOnline();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Profile profile = PLUGIN.getGameManager().getProfile(player);
+
+            if (profile != null) {
+                profile.setGamesPlayed(profile.getGamesPlayed() + 1);
+                if (profile.getGamesPlayed() == 100) {
+                    profile.awardAchievement(Achievements.LONG_TIME_PLAYER);
+                }
+            }
+        }
+
         if (getHumansSize() == 0) {
             // zombies won
         } else if (getZombieSize() == 0) {
@@ -169,6 +184,16 @@ public class GameArena {
         }
 
         // run later, reset game state to waiting
+    }
+
+    public void awardOnline(Achievements achievement) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Profile profile = PLUGIN.getGameManager().getProfile(player);
+
+            if (profile != null) {
+                profile.awardAchievement(achievement);
+            }
+        }
     }
 
 }
