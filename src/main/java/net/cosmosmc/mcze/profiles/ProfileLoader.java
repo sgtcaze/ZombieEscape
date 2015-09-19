@@ -2,6 +2,7 @@ package net.cosmosmc.mcze.profiles;
 
 import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
+import net.cosmosmc.mcze.core.constants.Achievements;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -33,7 +34,7 @@ public class ProfileLoader extends BukkitRunnable {
             preparedStatement.setInt(4, 0);
             preparedStatement.setInt(5, 0);
             preparedStatement.setInt(6, 0);
-            preparedStatement.setString(7, StringUtils.repeat("f", 10));
+            preparedStatement.setString(7, StringUtils.repeat("f", Achievements.values().length));
             preparedStatement.setString(8, profile.getName());
             preparedStatement.execute();
 
@@ -47,7 +48,7 @@ public class ProfileLoader extends BukkitRunnable {
                 profile.setZombieKills(resultSet.getInt("zombie_kills"));
                 profile.setPoints(resultSet.getInt("points"));
                 profile.setWins(resultSet.getInt("wins"));
-                profile.setAchievements(resultSet.getString("achievements").toCharArray());
+                profile.setAchievements(getAchievements(resultSet));
                 profile.setLoaded(true);
             }
 
@@ -66,4 +67,26 @@ public class ProfileLoader extends BukkitRunnable {
         }
     }
 
+    private char[] getAchievements(ResultSet result) throws SQLException {
+        char[] achievements = new char[Achievements.values().length];
+        char[] achievementStatuses = result.getString("achievements").toCharArray();
+
+        for(Achievements achievement : Achievements.values()) {
+            if(isSet(achievementStatuses, achievement.getId())) {
+                achievements[achievement.getId()] = achievementStatuses[achievement.getId()];
+            } else {
+                achievements[achievement.getId()] = 'f';
+            }
+        }
+
+        return achievements;
+    }
+
+    private boolean isSet(Object[] array, int index) {
+        try {
+            return (array[index] != null);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+    }
 }
