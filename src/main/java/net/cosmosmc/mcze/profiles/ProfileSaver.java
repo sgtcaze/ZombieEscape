@@ -14,7 +14,7 @@ public class ProfileSaver extends BukkitRunnable {
     private Profile profile;
     private ZombieEscape plugin;
 
-    private static final String SAVE = "UPDATE data SET zombie_kills=?, human_kills=?, points=?, wins=?, achievements=? WHERE uuid=?";
+    private static final String SAVE = "UPDATE data SET zombie_kills=?, human_kills=?, points=?, wins=?, achievements=?, human_kit=?, zombie_kit=? WHERE uuid=?";
 
     @Override
     public void run() {
@@ -29,7 +29,9 @@ public class ProfileSaver extends BukkitRunnable {
             preparedStatement.setInt(3, profile.getPoints());
             preparedStatement.setInt(4, profile.getWins());
             preparedStatement.setString(5, new String(profile.getAchievements()));
-            preparedStatement.setString(6, profile.getUuid().toString());
+            preparedStatement.setString(6, profile.getHumanKit().name());
+            preparedStatement.setString(7, profile.getZombieKit().name());
+            preparedStatement.setString(8, profile.getUuid().toString());
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {

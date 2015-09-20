@@ -3,6 +3,7 @@ package net.cosmosmc.mcze.core;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.constants.Achievements;
 import net.cosmosmc.mcze.core.constants.GameState;
+import net.cosmosmc.mcze.core.constants.KitType;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.events.GameOverEvent;
 import net.cosmosmc.mcze.events.GameStartEvent;
@@ -11,6 +12,7 @@ import net.cosmosmc.mcze.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -88,6 +90,12 @@ public class GameArena {
     public void addZombie(Player player) {
         humans.remove(player.getUniqueId());
         zombies.add(player.getUniqueId());
+    }
+
+    public void giveKit(Player player) {
+        Profile profile = PLUGIN.getGameManager().getProfile(player);
+        KitType kitType = isHuman(player) ? profile.getHumanKit() : profile.getZombieKit();
+        kitType.getKitAction().giveKit(player);
     }
 
     public void startCountdown() {

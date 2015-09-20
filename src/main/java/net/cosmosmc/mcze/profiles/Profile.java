@@ -3,6 +3,7 @@ package net.cosmosmc.mcze.profiles;
 import lombok.Getter;
 import lombok.Setter;
 import net.cosmosmc.mcze.core.constants.Achievements;
+import net.cosmosmc.mcze.core.constants.KitType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -23,6 +24,9 @@ public class Profile {
     private boolean loaded;
 
     private char[] achievements;
+
+    private KitType humanKit;
+    private KitType zombieKit;
 
     public Profile(Player player) {
         this.uuid = player.getUniqueId();
