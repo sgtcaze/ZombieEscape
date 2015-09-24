@@ -4,13 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum Achievements {
 
-    FIRST_GAME_PLAYED(0, "First Game", "Play 1 Game"),
-    LONG_TIME_PLAYER(1, "Long Time Player", "Play 100 games");
-
-    private int id;
-    private String name;
-    private String description;
+    FIRST_GAME_PLAYED("First Game", "Play 1 Game"),
+    LONG_TIME_PLAYER("Long Time Player", "Play 100 games");
+    
+    private static int nextId;
+    private final int id;
+    private final String name;
+    private final String description;
+    
+    private Achievements(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.id = nextId++;
+    }
+    
 }
