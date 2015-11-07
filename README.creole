@@ -1,0 +1,81 @@
+= Zombie Escape
+
+== About
+The game is simple... RUN! There are 2 teams: The Humans and the Zombies. The Humans' objective is to run and parkour through maps to get to the 'nukeroom'. (This is a round win for the Humans.) The Zombies' goal is to infect humans before they reach the nukeroom. Each team has unique kits and abilities that suit multiple play styles.
+
+== Downloads
+You can download development builds [[http://ci.playmc.cc/job/ZombieEscape/lastSuccessfulBuild/artifact/target/ZombieEscape.jar|Click Here]]
+//Please note development builds are considered unstable, and should only be used for testing!//
+
+Official releases will appear in the "Releases" tab on the repository located [[https://www.github.com/sgtcaze/ZombieEscape|Click Here]]. These files are considered stable. A SHA-256 hash will be provided to assure file integrity.
+
+We have an Official project page coming soon!
+
+== Setup
+
+==== Map Guide
+You can read how to create a map [[https://cosmosmc.net/threads/zombie-escape-map-guide.812/|Click Here]]
+
+==== Configuration (Settings.yml)
+| Setting     | Description     | Values     |
+| MapsPath | This is the location of your maps folder. | ex: /home/MyUser/My_Maps/ |
+| ArenasPath | This is the location of your arenas folder. | ex: /home/MyUser/My_Arenas/ |
+| Spawn | This stores the coordinates of the lobby. The data is in one line (See format below.)| ex: 0 64 0 90 0 |
+| Database | This will create a database to store player stats. (See storage below.) | N/A |
+
+==== Arena File (MyArena.yml)
+
+An 'Arena File' represent a 'match' in Zombie Escape. The file should store only the locations and configuration
+specific to that arena. There is no global configuration option.
+
+| Setting     | Description     | Values  |
+| World | This should be the name of the world the arena is in. It CAN be different from the arena name. | ex: MyWorld |
+| ArenaName | Represents the name of the arena. | ex: MyArena |
+| Creator | The creator of the map. | ex: MyEpicBuilder |
+| Nukeroom | The location of the nukeroom | (see storage) |
+| Checkpoints | A list of checkpoint locations | (see storage) |
+| Doors | A collection of door data | (see storage) |
+| Spawns | The player spawns | (see storage) |
+
+If curious, checkout our examples [[https://www.github.com/sgtcaze/ZombieEscape/examples|Click Here]]
+
+== Commands
+| Command     | Description     | Usage  |
+| /game | The base command. Will send usage. | N/A |
+| /game load | Creates or loads a Game file for modification. | /game load MyArena |
+| /game addspawn | Creates a player spawn at the command sender's location. | /game addspawn |
+| /game checkpoint | Creates a Zombie checkpoint at the command sender's location. | /game checkpoint |
+| /game nukeroom | Creates the Nukeroom endpoint at the command sender's location. | /game nukeroom |
+| /game door add | Creates a door with a specified number of seconds. | /game door add <seconds> |
+| /game door timer | Adjusts the timer on a door to a specified number of seconds. | /game door timer <seconds> |
+| /game door view | Displays information about a given door. | /game door view <ID> |
+| /game door delete | Deletes a door. | /game door delete <ID> |
+| /game door edge | Creates a door edge (corner) | /game door edge <1, 2> |
+| /setlobbyspawn | Sets the lobby for when players finish a game | /setlobbyspawn |
+| /ztele | If a player is a Zombie, this will teleport them to the nearest checkpoint | /ztele |
+
+== Storage
+
+==== MySQL
+
+At the moment only MySQL is supported for player stat tracking. The plugin does not need a database
+to function.
+
+==== FlatFile
+
+We will support player stats via flat files soon!
+
+== Developers
+
+==== Compile
+
+If you wish to compile Zombie Escape on your computer, you will need to follow these steps:
+* Setup a "Maven" project in your favorite IDE
+* Download our source code via git bash or the "Download Zip" button.
+* Set your Maven goal as 'clean package' and RUN
+
+== BUGS!
+Got a bug? Open an issue and we'll fix it!
+
+== FAQ
+* Coming Soon
