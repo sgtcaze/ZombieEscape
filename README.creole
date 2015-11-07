@@ -5,6 +5,7 @@ The game is simple... RUN! There are 2 teams: The Humans and the Zombies. The Hu
 
 == Downloads
 You can download development builds [[http://ci.playmc.cc/job/ZombieEscape/lastSuccessfulBuild/artifact/target/ZombieEscape.jar|Click Here]]
+
 //Please note development builds are considered unstable, and should only be used for testing!//
 
 Official releases will appear in the "Releases" tab on the repository located [[https://www.github.com/sgtcaze/ZombieEscape|Click Here]]. These files are considered stable. A SHA-256 hash will be provided to assure file integrity.
@@ -79,3 +80,6 @@ Got a bug? Open an issue and we'll fix it!
 
 == FAQ
 * Coming Soon
+
+== License
+We are GNU GPL v2.0. Have fun :D
