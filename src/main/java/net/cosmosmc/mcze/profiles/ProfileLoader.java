@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.constants.Achievements;
 import net.cosmosmc.mcze.core.constants.KitType;
+import net.cosmosmc.mcze.events.ProfileLoadedEvent;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
@@ -18,8 +20,8 @@ public class ProfileLoader extends BukkitRunnable {
     private Profile profile;
     private ZombieEscape plugin;
 
-    private static final String INSERT = "INSERT INTO data VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
-    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins,achievements,human_kit,zombie_kit FROM data WHERE uuid=?";
+    private static final String INSERT = "INSERT INTO ze_players VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=?";
+    private static final String SELECT = "SELECT zombie_kills,human_kills,points,wins,achievements,human_kit,zombie_kit FROM ze_players WHERE uuid=?";
 
     @Override
     public void run() {
@@ -36,7 +38,7 @@ public class ProfileLoader extends BukkitRunnable {
             preparedStatement.setInt(5, 0);
             preparedStatement.setInt(6, 0);
             preparedStatement.setString(7, StringUtils.repeat("f", Achievements.values().length));
-            preparedStatement.setString(8, "TANK");
+            preparedStatement.setString(8, "FORTIFY");
             preparedStatement.setString(9, "LEAPER");
             preparedStatement.setString(10, profile.getName());
             preparedStatement.execute();
@@ -70,6 +72,15 @@ public class ProfileLoader extends BukkitRunnable {
                 }
             }
         }
+
+        if (profile.isLoaded()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.getPluginManager().callEvent(new ProfileLoadedEvent(profile));
+                }
+            }.runTask(plugin);
+        }
     }
 
     private char[] getAchievements(ResultSet result) throws SQLException {
@@ -80,7 +91,7 @@ public class ProfileLoader extends BukkitRunnable {
         }
 
         char[] adjusted = StringUtils.repeat("f", Achievements.values().length).toCharArray();
-        System.arraycopy(achieved, 0, adjusted, 0, adjusted.length);
+        System.arraycopy(achieved, 0, adjusted, 0, achieved.length);
         return adjusted;
     }
 

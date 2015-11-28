@@ -10,6 +10,8 @@ public class PlayerPickupItem implements Listener {
     public void onPickup(PlayerPickupItemEvent event) {
         if (event.getPlayer().getWorld().getName().equals("world")) {
             event.setCancelled(true);
+        } else {
+            event.setCancelled(true);
         }
     }
 

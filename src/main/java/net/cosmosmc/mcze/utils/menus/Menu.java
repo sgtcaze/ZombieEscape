@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public abstract class Menu implements InventoryHolder {
 
     private int size;
-    private Inventory inventory;
+    protected Inventory inventory;
 
     public Menu(String title, int size) {
         inventory = Bukkit.createInventory(null, size, Utils.color(title));

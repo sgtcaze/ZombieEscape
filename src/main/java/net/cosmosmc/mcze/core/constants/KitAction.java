@@ -8,6 +8,6 @@ public interface KitAction {
 
     void giveKit(Player player);
 
-    void interact(PlayerInteractEvent event, ItemStack itemStack);
+    void interact(PlayerInteractEvent event, Player player, ItemStack itemStack);
 
 }

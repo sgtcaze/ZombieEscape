@@ -55,6 +55,10 @@ If curious, checkout our examples [[https://www.github.com/sgtcaze/ZombieEscape/
 | /setlobbyspawn | Sets the lobby for when players finish a game | /setlobbyspawn |
 | /ztele | If a player is a Zombie, this will teleport them to the nearest checkpoint | /ztele |
 
+== Translations
+
+Hang tight, we're still receiving translations from around the world!
+
 == Storage
 
 ==== MySQL

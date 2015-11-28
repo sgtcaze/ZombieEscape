@@ -4,20 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Achievements {
 
+    UNDEAD_SLAYER("Undead Slayer", "Kill a Zombie"),
+    BRAIN_EATER("Brain Eater", "Kill a Human"),
+    INFECTION("Infection", "Get Infected by a Zombie"),
     FIRST_GAME_PLAYED("First Game", "Play 1 Game"),
     LONG_TIME_PLAYER("Long Time Player", "Play 100 games");
-    
-    private static int nextId;
-    private final int id;
-    private final String name;
-    private final String description;
-    
-    private Achievements(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.id = nextId++;
-    }
-    
+
+    private String name;
+    private String description;
+
 }

@@ -1,0 +1,17 @@
+# Where players will spawn when they join
+# the server, and after games.
+Spawn: world|1495.5|74.0|-985.5|1.5|-2.7
+
+# This is used to define the 'Game Wand' which
+# helps define doors.
+GameWand:
+  Material: WOOD_AXE
+  Data: 0
+
+# The database for the server. This is responsible
+# for loading and storing stats.
+Database:
+  Address: localhost:3306
+  Schema: database
+  Username: my_user
+  Password: my_password

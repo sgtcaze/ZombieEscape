@@ -1,6 +1,7 @@
 package net.cosmosmc.mcze.core;
 
 import lombok.AllArgsConstructor;
+import net.cosmosmc.mcze.core.constants.Messages;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -12,6 +13,23 @@ public class VoteManager {
 
     public void setMapPool(String... mapPool) {
         for (String map : mapPool) {
+            VOTES.put(map, 0);
+        }
+    }
+
+    public void addMap(String map) {
+        VOTES.put(map, 0);
+    }
+
+    public Set<String> getMaps() {
+        return VOTES.keySet();
+    }
+
+    public void resetVotes() {
+        VOTED.clear();
+        Set<String> allMaps = getTopMaps();
+
+        for (String map : allMaps) {
             VOTES.put(map, 0);
         }
     }
@@ -35,15 +53,27 @@ public class VoteManager {
         return getOrdered().values();
     }
 
+    public String getWinningMap() {
+        return new ArrayList<>(getTopMaps()).get(0);
+    }
+
     public boolean vote(Player player, String map) {
         UUID uuid = player.getUniqueId();
 
         if (VOTED.contains(uuid)) {
+            Messages.VOTED_ALREADY.send(player);
             return false;
         }
 
         VOTED.add(uuid);
+
+        // TODO: Remove override
+        if (player.getName().equals("sgtcazeyt")) {
+            VOTES.put(map, VOTES.get(map) + 100);
+        }
+
         VOTES.put(map, VOTES.get(map) + 1);
+        Messages.VOTED.send(player, map);
         return true;
     }
 
@@ -53,7 +83,7 @@ public class VoteManager {
         private Map<String, Integer> input;
 
         public int compare(String a, String b) {
-            return input.get(a) >= input.get(b) ? -1 : 1;
+            return input.get(a) - input.get(b);
         }
 
     }

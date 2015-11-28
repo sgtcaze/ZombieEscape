@@ -1,24 +1,24 @@
 package net.cosmosmc.mcze.listeners;
 
+import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.GameArena;
 import net.cosmosmc.mcze.profiles.Profile;
 import net.cosmosmc.mcze.profiles.ProfileSaver;
+import net.cosmosmc.mcze.utils.Cooldowns;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+@AllArgsConstructor
 public class PlayerQuit implements Listener {
 
-    private final ZombieEscape PLUGIN;
-
-    public PlayerQuit(ZombieEscape plugin) {
-        this.PLUGIN = plugin;
-    }
+    private ZombieEscape plugin;
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        GameArena gameArena = PLUGIN.getGameArena();
+        event.setQuitMessage(null);
+        GameArena gameArena = plugin.getGameArena();
 
         gameArena.purgePlayer(event.getPlayer());
 
@@ -29,8 +29,10 @@ public class PlayerQuit implements Listener {
             }
         }
 
-        //Profile profile = PLUGIN.getGameManager().getRemovedProfile(event.getPlayer());
-        //new ProfileSaver(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
+        Cooldowns.removeCooldowns(event.getPlayer());
+
+        Profile profile = plugin.getRemovedProfile(event.getPlayer());
+        new ProfileSaver(profile, plugin).runTaskAsynchronously(plugin);
     }
 
 }

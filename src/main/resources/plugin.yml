@@ -1,4 +1,8 @@
 name: ZombieEscape
 author: sgtcaze and pals
-version: 1.0
+version: 1.0.0
 main: net.cosmosmc.mcze.ZombieEscape
+commands:
+  game:
+  setlobbyspawn:
+  ztele:

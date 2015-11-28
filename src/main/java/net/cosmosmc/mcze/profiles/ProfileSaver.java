@@ -14,7 +14,7 @@ public class ProfileSaver extends BukkitRunnable {
     private Profile profile;
     private ZombieEscape plugin;
 
-    private static final String SAVE = "UPDATE data SET zombie_kills=?, human_kills=?, points=?, wins=?, achievements=?, human_kit=?, zombie_kit=? WHERE uuid=?";
+    private static final String SAVE = "UPDATE ze_players SET zombie_kills=?, human_kills=?, points=?, wins=?, achievements=?, human_kit=?, zombie_kit=? WHERE uuid=?";
 
     @Override
     public void run() {

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Profile {
+ public class Profile {
 
     private UUID uuid;
     private String name;
@@ -34,7 +34,7 @@ public class Profile {
     }
 
     public void awardAchievement(Achievements achievement) {
-        achievements[achievement.getId()] = 't';
+        achievements[achievement.ordinal()] = 't';
     }
 
 }

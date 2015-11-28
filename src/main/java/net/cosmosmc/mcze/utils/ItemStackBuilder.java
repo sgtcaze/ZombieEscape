@@ -6,7 +6,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class ItemStackBuilder {
     }
 
     public ItemStackBuilder withData(int data) {
-        ITEM_STACK.setData(new MaterialData(ITEM_STACK.getType(), (byte) data));
+        ITEM_STACK.setDurability((short) data);
         return this;
     }
 
