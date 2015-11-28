@@ -24,9 +24,7 @@
         <dependency>
             <groupId>HolographicDisplays</groupId>
             <artifactId>org.filoghost</artifactId>
-            <version>1.7</version>
-            <scope>system</scope>
-            <systemPath>C:/Apps/dev/dependencies/HolographicDisplays.jar</systemPath>
+            <version>YOUR_VERSION</version>
         </dependency>
         <!-- HikariCP -->
         <dependency>
