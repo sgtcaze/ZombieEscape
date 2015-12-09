@@ -51,6 +51,8 @@ public enum Messages {
             "\n/game addspawn &7adds a spawn location" +
             "\n/game checkpoint &7adds a checkpoint" +
             "\n/game nukeroom &7sets the nukeroom for this map"),
+    UNKNOWN_COMMAND("&cCommand unknown! Use &a/game help &cfor more information!"),
+    CORRECTION("&cDid you mean &a/game %s&c?"),
     VOTED("&aYou voted for &2%s"),
     VOTED_ALREADY("&cYou already voted."),
     RELOADING("&aReloading..."),

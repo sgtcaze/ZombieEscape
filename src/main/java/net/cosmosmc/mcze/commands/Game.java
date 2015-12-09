@@ -2,6 +2,7 @@ package net.cosmosmc.mcze.commands;
 
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.utils.GameFile;
+import net.cosmosmc.mcze.utils.Levenshtein;
 import net.cosmosmc.mcze.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,6 +37,8 @@ public class Game implements CommandExecutor {
 
         if (args.length == 1) {
             switch (args[0].toLowerCase()) {
+                case "help":
+                    Messages.USAGE_GAME.send(player);
                 case "addspawn":
                     int spawn = editedFile.createListLocation(player, null, "Spawns");
                     Messages.CREATED_SPAWN.send(player, spawn);
@@ -50,7 +53,8 @@ public class Game implements CommandExecutor {
                     Messages.CREATED_NUKEROOM.send(player);
                     break;
                 default:
-                    sendUsage(player);
+                    sendUnknownCommand(player);
+                    sendCorrection(player, args[0].toLowerCase(), new String[] { "addspawn", "checkpoint", "nukeroom" });
             }
         } else if (args.length == 2) {
             switch (args[0].toLowerCase()) {
@@ -58,7 +62,8 @@ public class Game implements CommandExecutor {
                     load(player, args[1]);
                     break;
                 default:
-                    sendUsage(player);
+                    sendUnknownCommand(player);
+                    sendCorrection(player, args[0].toLowerCase(), new String[] { "load" });
             }
         } else if (args.length == 3) {
             switch (args[0].toLowerCase()) {
@@ -66,7 +71,8 @@ public class Game implements CommandExecutor {
                     doorSubCommand(player, args);
                     break;
                 default:
-                    sendUsage(player);
+                    sendUnknownCommand(player);
+                    sendCorrection(player, args[0].toLowerCase(), new String[] { "door" });
             }
         } else if (args.length == 4) {
             switch (args[0].toLowerCase()) {
@@ -74,10 +80,11 @@ public class Game implements CommandExecutor {
                     doorSubCommand(player, args);
                     break;
                 default:
-                    sendUsage(player);
+                    sendUnknownCommand(player);
+                    sendCorrection(player, args[0].toLowerCase(), new String[] { "door" });
             }
         } else {
-            sendUsage(player);
+            sendUnknownCommand(player);
         }
         return false;
     }
@@ -87,8 +94,14 @@ public class Game implements CommandExecutor {
      *
      * @param player the player to send the usage to
      */
-    private void sendUsage(Player player) {
-        Messages.USAGE_GAME.send(player);
+    private void sendUnknownCommand(Player player) { Messages.UNKNOWN_COMMAND.send(player); }
+
+    private void sendCorrection(Player player, String input, String[] options)
+    {
+        String closest = Levenshtein.getClosestString(input, options);
+        if(closest.equals("")) return;
+
+        Messages.CORRECTION.send(player, closest);
     }
 
     /**
