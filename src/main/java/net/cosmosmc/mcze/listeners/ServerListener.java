@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.core.tasks.ReloadTask;
-import net.cosmosmc.mcze.events.ProfileLoadedEvent;
+import net.cosmosmc.mcze.api.events.ProfileLoadedEvent;
 import net.cosmosmc.mcze.profiles.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

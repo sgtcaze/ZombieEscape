@@ -1,7 +1,9 @@
 package net.cosmosmc.mcze.listeners;
 
 import net.cosmosmc.mcze.ZombieEscape;
+import net.cosmosmc.mcze.api.events.PlayerInfectedEvent;
 import net.cosmosmc.mcze.core.GameArena;
+import net.cosmosmc.mcze.core.constants.InfectReason;
 import net.cosmosmc.mcze.core.constants.Messages;
 import net.cosmosmc.mcze.profiles.Profile;
 import org.bukkit.Bukkit;
@@ -58,6 +60,14 @@ public class EntityDamageByEntity implements Listener {
                     return;
                 }
 
+                PlayerInfectedEvent pie = new PlayerInfectedEvent(damaged, InfectReason.ZOMBIE_BITE, damager, false);
+                Bukkit.getPluginManager().callEvent(pie);
+
+                if (pie.isCancelled()) {
+                    event.setCancelled(true);
+                    return;
+                }
+
                 gameArena.addZombie(damaged);
 
                 Profile damagerProfile = PLUGIN.getProfile(damager);
@@ -75,7 +85,7 @@ public class EntityDamageByEntity implements Listener {
                 if (gameArena.shouldEnd()) {
                     gameArena.endGame();
                 }
-            } else if(gameArena.isNotPlaying(damager) || gameArena.isNotPlaying(damaged)) {
+            } else if (gameArena.isNotPlaying(damager) || gameArena.isNotPlaying(damaged)) {
                 event.setCancelled(true);
             }
         }

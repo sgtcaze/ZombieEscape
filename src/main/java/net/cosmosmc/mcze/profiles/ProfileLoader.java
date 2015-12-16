@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import net.cosmosmc.mcze.ZombieEscape;
 import net.cosmosmc.mcze.core.constants.Achievements;
 import net.cosmosmc.mcze.core.constants.KitType;
-import net.cosmosmc.mcze.events.ProfileLoadedEvent;
+import net.cosmosmc.mcze.api.events.ProfileLoadedEvent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;

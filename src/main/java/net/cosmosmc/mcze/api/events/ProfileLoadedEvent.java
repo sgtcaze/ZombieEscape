@@ -1,4 +1,4 @@
-package net.cosmosmc.mcze.events;
+package net.cosmosmc.mcze.api.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

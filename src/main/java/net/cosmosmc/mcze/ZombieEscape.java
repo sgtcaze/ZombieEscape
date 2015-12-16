@@ -2,6 +2,8 @@ package net.cosmosmc.mcze;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import net.cosmosmc.mcze.api.Api;
+import net.cosmosmc.mcze.api.ZEApi;
 import net.cosmosmc.mcze.commands.Game;
 import net.cosmosmc.mcze.commands.SetLobbySpawn;
 import net.cosmosmc.mcze.commands.Ztele;
@@ -35,6 +37,7 @@ import java.util.UUID;
 @Getter
 public class ZombieEscape extends JavaPlugin {
 
+    private static Api api;
     private Location serverSpawn;
 
     private GameArena gameArena;
@@ -83,6 +86,14 @@ public class ZombieEscape extends JavaPlugin {
         }
 
         // TODO: Cleanup open files/instances/etc
+    }
+
+    public static Api getApi() {
+        if (api == null) {
+            api = new ZEApi();
+        }
+
+        return api;
     }
 
     private void registerListeners() {
